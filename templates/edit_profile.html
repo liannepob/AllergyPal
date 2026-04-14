@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block body %}
+    <form action = "/edit_profile" method="post">
+        <!--New form for users to make changes to their profile-->
+        <!--name-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="name" placeholder="Name" type="text" required value="{{ name }}">
+        </div>
+
+        <!--allows user to edit their age, hometown, food preferences-->
+        <!--age-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="age" placeholder="Age" type="number" required value="{{ age }}">
+        </div>
+        <!--hometown-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="hometown" placeholder="Hometown" type="text" required value="{{ hometown }}">
+        </div>
+        <!--food preferences-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="food_pref" placeholder="Food Preferences" type="text" required value="{{ food_pref }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+{% endblock %}

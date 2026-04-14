@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}AllergyPal{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fondamento&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Sidebar / Nav -->
+        <nav class="sidebar">
+            <h2 class="logo">AllergyPal</h2>
+
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">🏠 Home</a></li>
+            {% if session.get("user_id") %}
+                <li><a href="{{ url_for('profile') }}">👤 Profile</a></li>
+                <li><a href="{{ url_for('add_allergy') }}">➕ Add Allergy</a></li>
+                <li><a href="{{ url_for('restaurant') }}">🍽️ Restaurants</a></li>
+                <li><a href="{{ url_for('add_restaurant') }}">➕ Add Restaurant</a></li>
+                <li><a href="{{ url_for('emergency') }}">🚨 Emergency Card</a></li>
+                <li><a href="{{ url_for('er_contacts') }}">📋 Emergency Contacts</a></li>
+                <li><a href="#">🗺️ Map</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">🔑 Login</a></li>
+                <li><a href="{{ url_for('register') }}">📝 Register</a></li>
+            {% endif %}
+        </ul>
+
+        {% if session.get("user_id") %}
+            <a class="logout" href="{{ url_for('logout') }}">Log out</a>
+        {% endif %}
+        
+        <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+        
+        </nav>
+
+        <main class="main-content">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-container">
+                {% for message in messages %}
+                    <div class="flash-message">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            {% block body %}{% endblock %}
+        </main>
+        
+    </div>
+
+    <script>
+       function toggleTheme() {
+        const body = document.body;
+        const btn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            btn.textContent = '🌙 Dark Mode';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️ Light Mode';
+        }
+    }     
+    </script>
+</body>
+</html>

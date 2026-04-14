@@ -1,0 +1,5 @@
+flask
+flask-session
+cs50
+werkzeug
+python-dotenv

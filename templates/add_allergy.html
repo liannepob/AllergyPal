@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Allergy Center! Add your allergies/dietary restrictions here!
+{% endblock %}
+
+<!--this form is intended so users can add more allergies/make changes and even delete-->
+
+{% block body %}
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="mb-4">Allergies/Dietary Restrictions</h2>
+
+    <form method="POST" class="form-control p-4">
+        <!--Create a form for the user to input allergen-->
+        <input autocomplete="off" class="form-control mb-2" name="allergen" placeholder="Enter an allergen/dietary restriction" type="text" required>
+
+        <!--Dropdown Selection for categories of allergies users can select from:-->
+        <label for="category" class="me-2">Category of Allergen:</label>
+        <select id="category" name="category" class="form-select w-auto" required>
+            <option value="diet">Dietary Restriction</option>
+            <option value="food">Food</option>
+            <option value="medication">Medication</option>
+            <option value="environmental">Environmental(grass, pollen, etc)</option>
+        </select>
+
+        <!--Dropdown Selection for mild-severe allergies users can select from:-->
+        <label for="severity" class="me-2">Severity (Mild-Severe):</label>
+        <select id="severity" name="severity" class="form-select w-auto" required>
+            <option value="mild">Mild</option>
+            <option value="moderate">Moderate</option>
+            <option value="severe">Severe</option>
+        </select>
+
+        <button id="submit" class="btn btn-primary mt-2" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

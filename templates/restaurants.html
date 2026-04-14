@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Saved Restaurants
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="mb-4">Restaurant Information</h2>
+<!--displays the information of the restaurant-->
+    <table>
+        <thead>
+            <tr>
+                <th>Restaurant Name</th>
+                <th>Address</th>
+                <th>Status(unsafe/safe/unsure)</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in restaurants %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.address }}</td>
+                <td>{{ r.status }}</td>
+                <td>{{ r.notes }}</td>
+                <td>
+                    <form action="{{ url_for('delete_restaurant') }}" method="POST">
+                        <input type="hidden" name="restaurant_id" value="{{r.restaurant_id}}">
+                        <button type ="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No saved restaurants yet. <a href="{{ url_for('add_restaurant') }}">Add one!</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

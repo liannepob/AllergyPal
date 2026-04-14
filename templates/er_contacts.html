@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Emergency Contacts
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="mb-4">Emergency Contact Information</h2>
+    <p>Please add a trusted emergency contact below.</p>
+
+    <form method="POST" class="form-control p-4">
+
+        <!-- Contact Name -->
+        <div class="mb-3">
+            <label for="name"><strong>Full Name</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="contact_name"
+                name="name"
+                placeholder="Enter full name"
+                type="text"
+                required
+            >
+        </div>
+
+        <!-- Relationship -->
+        <div class="mb-3">
+            <label for="relation"><strong>Relationship</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="relationship"
+                name="relationship"
+                placeholder="Parent, sibling, friend, guardian, etc."
+                type="text"
+                required
+            >
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-3">
+            <label for="number"><strong>Phone Number</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="phone"
+                name="number"
+                placeholder="Enter phone number"
+                type="tel"
+                required
+            >
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email"><strong>Email Address</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter email address"
+                type="email"
+            >
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            <label for="address"><strong>Address</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="address"
+                name="address"
+                placeholder="Enter street address"
+                type="text"
+            >
+        </div>
+
+        <!-- Age -->
+        <div class="mb-3">
+            <label for="age"><strong>Age</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="age"
+                name="age"
+                placeholder="Enter age"
+                type="number"
+                min="0"
+            >
+        </div>
+
+        <!-- Notes -->
+        <div class="mb-3">
+            <label for="notes"><strong>Additional Notes</strong></label>
+            <textarea
+                class="form-control"
+                id="notes"
+                name="notes"
+                rows="4"
+                placeholder="Anything important to know (preferred hospital, secondary number, availability, etc.)"
+            ></textarea>
+        </div>
+
+        <button class="btn btn-primary mt-2" type="submit">Save Emergency Contact</button>
+    </form>
+
+    <!-- Saved Contacts -->
+    {% if contacts %}
+    <h3 class="mt-5 mb-3">Saved Contacts</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Relationship</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contacts %}
+            <tr>
+                <td>{{ c.contact_name }}</td>
+                <td>{{ c.relationship or "—" }}</td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.email or "—" }}</td>
+                <td>{{ c.address or "—" }}</td>
+                <td>{{ c.age or "—" }}</td>
+                <td>{{ c.notes or "—" }}</td>
+                <td>
+                    <form action="{{ url_for('delete_er_contact') }}" method="POST">
+                        <input type="hidden" name="contact_id" value="{{ c.id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

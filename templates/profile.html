@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile & Settings
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4" style="max-width: 700px;">
+
+    <h2 class="mb-4">Your Profile</h2>
+
+    <!-- Name -->
+    <div class="mb-3">
+        <strong>Name:</strong> {{ name }}
+    </div>
+
+    <!-- Username -->
+    <div class="mb-3">
+        <strong>Username:</strong> {{ username }}
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+        <strong>Email:</strong> {{ email }}
+    </div>
+
+    <!-- Age -->
+    <div class="mb-3">
+        <strong>Age:</strong> {{ age }}
+    </div>
+
+    <!-- Hometown -->
+    <div class="mb-3">
+        <strong>Hometown:</strong> {{ hometown }}
+    </div>
+
+    <!-- Food Preferences -->
+    <div class="mb-3">
+        <strong>Food Preferences:</strong> {{ food_pref }}
+    </div>
+
+    <!-- Created At -->
+    <div class="mb-3">
+        <strong>Created at:</strong> {{ created_at }}
+    </div>
+
+    <!-- Table for Allergies -->
+    <div class="mb-3">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name of Allergen</th>
+                    <th>Level of Severity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in allergens %}
+                <tr>
+                    <td>{{ a.name }}</td>
+                    <td>{{ a.severity }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_allergy') }}" method="POST">
+                            <input type="hidden" name="allergy_id" value="{{a.id}}">
+                            <button type ="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                    <tr>
+                        <th>Emergancy Contact Name</th>
+                        <th>Emergancy Contact Phone Number</th>
+                        <th>Emergancy Contact Age</th>
+                        <th>Emergancy Contact Relationship</th>
+                        <th>Action</th>
+                    </tr>
+            </thead>
+            <tbody>
+                {% for e in er_contact %}
+                <tr>
+                    <td>{{ e.contact_name }}</td>
+                    <td>{{ e.phone }}</td>
+                    <td>{{ e.age }}</td>
+                    <td>{{ e.relationship }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_er_contact') }}" method="POST">
+                            <input type="hidden" name="contact_id" value="{{e.id}}">
+                            <button type ="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="profile-card">
+        <a href="/edit_profile" class="btn profile-btn">
+            Make Changes
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

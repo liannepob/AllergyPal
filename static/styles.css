@@ -1,0 +1,261 @@
+/* ── CSS Variables ── */
+:root {
+    --red: #d02276;
+    --green: #0f862d; 
+    --bg: #ffe4e4;
+    --surface: #ff9f9f;
+    --text: #1a1a1a;
+    --sidebar-bg: #8af1a4;
+    --sidebar-text: #1a1a1a;
+    --border: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --bg: #510331;
+    --surface: #7d0454;
+    --text: #3f003c;
+    --border: #6e084b;
+    --sidebar-bg: #4a9e55;
+    --red: #ff8fab;
+}
+
+/* ── Reset ── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ── Layout ── */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 240px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    border-radius: 0 16px 16px 0;
+    border-right: 3px solid var(--red);
+}
+
+.logo {
+    font-family: 'Fondamento', cursive;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    flex: 1;
+}
+
+.nav-links li {
+    margin-bottom: 8px;
+}
+
+.nav-links a {
+    color: var(--sidebar-text);
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    display: block;
+    font-weight: 500;
+    background-color: rgba(0,0,0,0.1);
+    transition: background 0.2s;
+}
+
+.nav-links a:hover {
+    background-color: var(--red);
+    color: white;
+}
+
+.logout {
+    color: #1a1a1a;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+    font-weight: 600;
+    border-top: 1px solid rgba(0,0,0,0.2);
+    margin-top: 16px;
+}
+
+.logout:hover {
+    color: var(--red);
+}
+
+/* ── Main Content ── */
+.main-content {
+    margin-left: 240px;
+    padding: 32px;
+    flex: 1;
+    background-color: var(--bg);
+}
+
+/* ── Flash Messages ── */
+.flash-container {
+    margin-bottom: 16px;
+}
+
+.flash-message {
+    background-color: var(--green);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* ── Tables ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+th {
+    background-color: var(--red);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #fff5f5;
+}
+
+/* ── Buttons ── */
+button {
+    background-color: var(--red);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--red);
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.85;
+}
+
+.profile-btn {
+    background-color: var(--green);
+    color: white;
+}
+
+/* ── Forms ── */
+.form-control {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    background-color: #fafafa;
+    transition: border 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ── Cards ── */
+.profile-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+}
+
+/* ── Headings ── */
+h1, h2, h3 {
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* ── Dark Mode Toggle ── */
+.theme-toggle {
+    background: none;
+    border: 2px solid #1a1a1a;
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(0,0,0,0.1);
+}

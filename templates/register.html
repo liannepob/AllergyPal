@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register For AllergyPal!
+{% endblock %}
+
+{% block body %}
+    <form action = "/register" method="post">
+        <!--Name form for the user(required)-->
+        <div class ="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Name" type="text" required>
+        </div>
+
+        <!--creates username, password/confirmed password, email for reset token for users-->
+
+        <!--creates an email area to be saved into the db so API can send token to OTP-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="email" placeholder="Email" type="email" required>
+        </div>
+
+        <div class ="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text" required>
+        </div>
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password"required>
+        </div>
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm Password" type="password" required>
+        </div>
+
+        <!--creates hometown, age, food preference for users-->
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="age" placeholder="Age" type="number" required>
+        </div>
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="hometown" placeholder="Hometown" type="text" required>
+        </div>
+        <div class ="mb-3">
+            <input class="form-control mx-auto w-auto" name="food_pref" placeholder="Food Preferences (optional)" type="text">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+{% endblock %}

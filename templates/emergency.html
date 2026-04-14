@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Emergency Contacts
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="mb-4">Emergency Card Information</h2>
+
+    <!-- Personal Information -->
+    {% if user_info %}
+    <h3 class="mt-5 mb-3">Personal Information</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hometown</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in user_info %}
+            <tr>
+                <td>{{ u.name }}</td>
+                <td>{{ u.hometown }}</td>
+                <td>{{ u.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <!-- Allergies Displayed -->
+    {% if user_info %}
+    <h3 class="mt-5 mb-3">Allergy Information</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Allergy</th>
+                <th>Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in allergies %}
+            <tr>
+                <td>{{ a.name }}</td>
+                <td>{{ a.severity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <!-- Emergency Contacts -->
+    {% if user_info %}
+    <h3 class="mt-5 mb-3">Emergency Contact Information</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Relationship</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contacts %}
+            <tr>
+                <td>{{ c.contact_name }}</td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.address }}</td>
+                <td>{{ c.age }}</td>
+                <td>{{ c.relationship }}</td>
+                <td>{{ c.notes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
