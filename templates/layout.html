@@ -59,17 +59,28 @@
     </div>
 
     <script>
-       function toggleTheme() {
-        const body = document.body;
-        const btn = document.querySelector('.theme-toggle');
-        if (body.getAttribute('data-theme') === 'dark') {
-            body.removeAttribute('data-theme');
-            btn.textContent = '🌙 Dark Mode';
-        } else {
-            body.setAttribute('data-theme', 'dark');
-            btn.textContent = '☀️ Light Mode';
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
         }
-    }     
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('theme');
+            const btn = document.querySelector('.theme-toggle');
+            if (saved === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                if (btn) btn.textContent = '☀️ Light Mode';
+            }
+        });    
     </script>
 </body>
 </html>

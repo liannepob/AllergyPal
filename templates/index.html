@@ -8,8 +8,8 @@ Home
 {% if session.get("user_id") %}
     <h1>Welcome back!</h1>
     <p>Manage your allergies, emergency contacts, and safe restaurants all in one place.</p>
-    <a href="{{ url_for('profile') }}">View Profile</a>
-    <a href="{{ url_for('emergency') }}">Emergency Card</a>
+    <a href="{{ url_for('profile') }}" class="btn btn-primary">View Profile</a>
+    <a href="{{ url_for('emergency') }}" class="btn btn-primary">Emergency Card</a>
 {% else %}
     <h1>Welcome to AllergyPal</h1>
     <p>Manage your allergies, find safe restaurants, and share your emergency info with people you trust.</p>
