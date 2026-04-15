@@ -33,7 +33,7 @@ unsafe restaurants all in one place.
 - `saved_restaurants` — user-specific restaurant safety status
 - `emergency_contacts` — contacts linked to each user
 
-## Roadmap
+## Roadmap/What's next?
 - [ ] Restaurant API integration (Yelp / Google Places)
 - [ ] Map view for nearby safe restaurants
 - [ ] Friends and social sharing
