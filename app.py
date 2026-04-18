@@ -4,6 +4,12 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 from helpers import login_required
+import os
+import requests
+from dotenv import load_dotenv
+load_dotenv()
+import logging
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 app = Flask(__name__)
@@ -466,3 +472,37 @@ def delete_restaurant():
 
     flash("Restaurant deleted successfully.")
     return redirect(url_for("restaurant"))
+
+@app.route("/search_restaurants", methods=["GET", "POST"])
+@login_required
+def search_restaurants():
+    current = session["user_id"]
+
+    if request.method == "POST":
+        l = request.form.get("location")
+        r = request.form.get("radius")
+
+        if not l or not r:
+            return "missing field(s)"
+
+        location = l.strip().lower()
+        radius = r
+
+        api_key = os.environ.get("GOOGLE_PLACES_API_KEY")
+        url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+        params = {
+            "query": location + " restaurants",
+            "radius": radius,
+            "type": "restaurant",
+            "key": api_key
+        }
+        response = requests.get(url, params=params)
+        data = response.json()
+        print(data.get("status"))
+        print(data.get("error_message", "no error"))
+        results = data.get("results", [])
+
+        return render_template("search_restaurants.html", results=results)
+
+    else:
+        return render_template("search_restaurants.html")

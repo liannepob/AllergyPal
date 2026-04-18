@@ -24,7 +24,7 @@
                 <li><a href="{{ url_for('add_restaurant') }}">➕ Add Restaurant</a></li>
                 <li><a href="{{ url_for('emergency') }}">🚨 Emergency Card</a></li>
                 <li><a href="{{ url_for('er_contacts') }}">📋 Emergency Contacts</a></li>
-                <li><a href="#">🗺️ Map</a></li>
+                <li><a href="{{ url_for('search_restaurants') }}">🗺️ Map</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}">🔑 Login</a></li>
                 <li><a href="{{ url_for('register') }}">📝 Register</a></li>

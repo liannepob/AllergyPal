@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Search for a Restaurant
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 700px;">
+<form method="POST" class="form-control p-4">
+
+    <!-- Restaurant Name -->
+        <div class="mb-3">
+            <label for="location"><strong>Search for a Restaurant</strong></label>
+            <input
+                autocomplete="off"
+                class="form-control"
+                id="location"
+                name="location"
+                placeholder="Search for a restaurant in your city"
+                type="text"
+            >
+        </div>
+
+        <!-- Status -->
+        <div class="mb-3">
+            <label for="radius"><strong>Radius</strong></label>
+            <select name = "radius" id="radius" required>
+                <option value="8047">5 Miles</option>
+                <option value="16093">10 Miles</option>
+                <option value="24140">15 Miles</option>
+                <option value="32187">20+ Miles</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+    </form>
+
+    {% if results %}
+    <div class="mt-4">
+        <h5>Results</h5>
+        {% for r in results %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h6 class="card-title">{{ r.name }}</h6>
+                <p class="card-text text-muted mb-1">{{ r.formatted_address }}</p>
+                {% if r.rating %}
+                <small>Rating: {{ r.rating }} / 5</small>
+                {% endif %}
+                
+                <form action="{{ url_for('add_restaurant') }}" method="POST">
+                    <input type="hidden" name="restaurant" value="{{ r.name }}">
+                    <input type="hidden" name="address" value="{{ r.formatted_address }}">
+                    <select name="status" required>
+                        <option value="safe">Safe</option>
+                        <option value="unsafe">Unsafe</option>
+                        <option value="unsure">Unsure</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-2">Save</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% elif results is defined %}
+    <p class="mt-4 text-muted">No restaurants found. Try a different location or radius.</p>
+    {% endif %}
+</div>
+{% endblock %}
