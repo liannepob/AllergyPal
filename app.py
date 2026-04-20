@@ -498,8 +498,6 @@ def search_restaurants():
         }
         response = requests.get(url, params=params)
         data = response.json()
-        print(data.get("status"))
-        print(data.get("error_message", "no error"))
         results = data.get("results", [])
 
         return render_template("search_restaurants.html", results=results)
