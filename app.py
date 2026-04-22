@@ -2,11 +2,12 @@ from cs50 import SQL
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
+from datetime import date, datetime
 from helpers import login_required
 from services.auth_tokens import generate_token
 from services.auth_tokens import verify_token
 from services.email import send_reset_email
+import hashlib
 import os
 import requests
 from dotenv import load_dotenv
