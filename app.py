@@ -532,7 +532,7 @@ def forgot_password():
         check_email = db.execute("""SELECT id, email FROM users WHERE email = ?""", email)
 
         if not check_email:
-            return redirect(url_for("reset_pass"))
+            return redirect(url_for("forgot_password"))
 
 
         info = check_email[0]
