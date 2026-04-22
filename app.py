@@ -82,8 +82,9 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Forget any user_id
-    session.clear()
-
+    if request.method == "GET":
+        session.clear()
+        return render_template("login.html")
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -104,9 +105,6 @@ def login():
         # Redirect user to home page
         return redirect("/")
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html")
 
 # Logout route for users
 @app.route("/logout")
