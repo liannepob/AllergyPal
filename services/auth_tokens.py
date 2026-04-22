@@ -9,6 +9,7 @@ def generate_token(db, user_id):
     duration = timedelta(minutes=30)
     expire_time = now + duration
 
+
     db.execute("INSERT INTO password_resets(user_id, token_hash, expires_at, used_at) VALUES(?, ?, ?, ?)",
                 user_id, hashed_token, expire_time, None
             )
@@ -29,7 +30,7 @@ def verify_token(db, token):
         row = look_up[0]
 
     hashed = row["token_hash"]
-    expire = row["expires_at"]
+    expire = datetime.fromisoformat(row["expires_at"])
     used = row["used_at"]
 
     if expire < now:

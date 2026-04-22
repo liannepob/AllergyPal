@@ -533,7 +533,7 @@ def forgot_password():
 
         info = check_email[0]
         reset = generate_token(db, info["id"])
-        reset_link = url_for('reset_password', token=reset, _external=True)
+        reset_link = url_for('reset_pass', token=reset, _external=True)
         send_email = send_reset_email(info["email"], reset_link)
         flash("Password reset email sent! Check your inbox.")
         return redirect(url_for("login"))
@@ -542,7 +542,7 @@ def forgot_password():
         return render_template("forgot_password.html")  # correct
 
 @app.route("/reset/<token>", methods=["GET", "POST"])
-def reset_password(token):
+def reset_pass(token):
     
     if request.method == "POST":
         new_pass = request.form.get("new_password")
@@ -573,6 +573,6 @@ def reset_password(token):
         return redirect(url_for("login"))
         
     else:
-        return render_template("reset_password.html")
+        return render_template("reset_pass.html")
 
 
