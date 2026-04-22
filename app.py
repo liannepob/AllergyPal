@@ -115,11 +115,6 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
-# forgot password for users
-@app.route("/reset_pass")
-def reset_pass():
-    return redirect(url_for("forgot_password"))
-
 # profile section for users info and the way to update it
 @app.route("/profile", methods=["GET"])
 @login_required
