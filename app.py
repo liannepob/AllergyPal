@@ -4,6 +4,9 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 from helpers import login_required
+from services.auth_tokens import generate_token
+from services.auth_tokens import verify_token
+from services.email import send_reset_email
 import os
 import requests
 from dotenv import load_dotenv
@@ -113,9 +116,9 @@ def logout():
     return redirect("/")
 
 # forgot password for users
-@app.route("/reset_pass", methods=["GET", "POST"])
+@app.route("/reset_pass")
 def reset_pass():
-    return "coming soon"
+    return redirect(url_for("forgot_password"))
 
 # profile section for users info and the way to update it
 @app.route("/profile", methods=["GET"])
@@ -481,21 +484,37 @@ def search_restaurants():
     if request.method == "POST":
         l = request.form.get("location")
         r = request.form.get("radius")
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
 
-        if not l or not r:
-            return "missing field(s)"
+        if not l and not lat and not lng:
+            return "please enter a location or provide your current location"
 
-        location = l.strip().lower()
+        if not r:
+            return "missing field"
+
+        location = l.strip().lower() if l else ""
         radius = r
 
         api_key = os.environ.get("GOOGLE_PLACES_API_KEY")
         url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-        params = {
+
+        if lat and lng:
+            params = {
+            "location": f"{lat},{lng}",
+            "radius": radius,
+            "type": "restaurant",
+            "key": api_key
+            }
+
+        else:
+            params = {
             "query": location + " restaurants",
             "radius": radius,
             "type": "restaurant",
             "key": api_key
-        }
+            }
+
         response = requests.get(url, params=params)
         data = response.json()
         results = data.get("results", [])
@@ -504,3 +523,60 @@ def search_restaurants():
 
     else:
         return render_template("search_restaurants.html")
+
+@app.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        check_email = db.execute("""SELECT id, email FROM users WHERE email = ?""", email)
+
+        if not check_email:
+            return redirect(url_for("reset_pass"))
+
+
+        info = check_email[0]
+        reset = generate_token(db, info["id"])
+        reset_link = url_for('reset_password', token=reset, _external=True)
+        send_email = send_reset_email(info["email"], reset_link)
+        flash("Password reset email sent! Check your inbox.")
+        return redirect(url_for("login"))
+    
+    else:
+        return render_template("forgot_password.html")  # correct
+
+@app.route("/reset/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    
+    if request.method == "POST":
+        new_pass = request.form.get("new_password")
+
+        confirm = request.form.get("confirm")
+
+        if new_pass != confirm:
+            return "Passwords do not match, try again please."
+
+        user_id = verify_token(db, token)
+
+        if user_id is None:
+            flash("Invalid or expired link")
+            return redirect(url_for("forgot_password"))
+
+        hashed_pass = generate_password_hash(new_pass, method="pbkdf2:sha256")  
+
+        db.execute("""UPDATE users
+                        SET hash = ?
+                        WHERE id = ?""",
+                         hashed_pass, user_id)
+
+        now = datetime.now()
+
+        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        db.execute("""UPDATE password_resets SET used_at = ? WHERE token_hash = ?""", now, token_hash)
+        flash("Password Successfully Reset!")
+        return redirect(url_for("login"))
+        
+    else:
+        return render_template("reset_password.html")
+
+

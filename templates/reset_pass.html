@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Reset Password Page
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="mb-4">Create a New Password Here!</h2>
+    <form method="POST" class="form-control p-4">
+        <input autocomplete="off" class="form-control mb-2" name="new_password" placeholder="New password" type="password" required>
+        <input autocomplete="off" class="form-control mb-2" name="confirm" placeholder="Confirm New password" type="password" required>
+        <button id="submit" class="btn btn-primary mt-2" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
