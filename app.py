@@ -533,7 +533,7 @@ def forgot_password():
 
         info = check_email[0]
         reset = generate_token(db, info["id"])
-        reset_link = url_for('reset_password', token=reset, _external=True)
+        reset_link = url_for('reset_pass', token=reset, _external=True)
         send_email = send_reset_email(info["email"], reset_link)
         flash("Password reset email sent! Check your inbox.")
         return redirect(url_for("login"))
